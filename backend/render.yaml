@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tetris-backend
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DB_PATH
+        value: ./data/app.db
+      - key: PUBLIC_BASE_URL
+        value: https://YOUR-RENDER-URL.onrender.com
+      - key: CORS_ORIGINS
+        value: "*"
