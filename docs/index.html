@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tetris + Ranking</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>テトリス（登録なしで即プレイ）</h1>
+    <div class="meta">
+      <div>Score: <span id="score">0</span></div>
+      <div>Lines: <span id="lines">0</span></div>
+      <div>Level: <span id="level">1</span></div>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="game">
+      <canvas id="board" width="300" height="600"></canvas>
+      <div class="hint">
+        ←→:移動 / ↑:回転 / ↓:落下 / Space:ハードドロップ / P:一時停止
+      </div>
+      <button id="btnStart">START</button>
+      <button id="btnPause">PAUSE</button>
+    </section>
+
+    <section class="side">
+      <h2>ランキング（Top 50）</h2>
+      <div class="row">
+        <button id="btnRefresh">更新</button>
+        <input id="apiBase" placeholder="API Base (例: https://xxx.onrender.com)" />
+      </div>
+      <ol id="leaderboard" class="leaderboard"></ol>
+
+      <details class="help">
+        <summary>メール登録 / パスワードリセット</summary>
+        <div class="box">
+          <p>メール登録するとID確認・パスワード再発行ができます。</p>
+          <div class="mini">
+            <input id="linkUser" placeholder="ID" />
+            <input id="linkPass" placeholder="PW" type="password" />
+            <input id="linkEmail" placeholder="Email" type="email" />
+            <button id="btnLinkEmail">メール登録</button>
+          </div>
+
+          <div class="mini">
+            <input id="recoverEmail" placeholder="Email" type="email" />
+            <button id="btnRecoverId">ID確認メール</button>
+          </div>
+
+          <div class="mini">
+            <input id="resetEmail" placeholder="Email" type="email" />
+            <button id="btnRequestReset">PWリセットメール</button>
+          </div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <!-- GAME OVER MODAL -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <h3>GAME OVER</h3>
+      <p>スコア <b id="finalScore">0</b> をランキングに保存しますか？</p>
+      <p class="small">※ ID+PWを入れるだけで保存OK。新規IDなら自動作成します（メールは任意）。</p>
+
+      <div class="form">
+        <input id="mUser" placeholder="ID (2-20文字)" />
+        <input id="mPass" placeholder="PW (6文字以上)" type="password" />
+        <input id="mEmail" placeholder="Email（任意）" type="email" />
+      </div>
+
+      <div class="actions">
+        <button id="btnSave">保存</button>
+        <button id="btnSkip">保存しない</button>
+      </div>
+
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
