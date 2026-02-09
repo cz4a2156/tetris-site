@@ -257,49 +257,37 @@ function step(time = 0) {
   requestAnimationFrame(step);
 }
 
-function actLeft() {
-  const next = { ...current, x: current.x - 1 };
-  if (!collides(board, next)) current.x--;
-}
-function actRight() {
-  const next = { ...current, x: current.x + 1 };
-  if (!collides(board, next)) current.x++;
-}
-function actDown() {
-  const next = { ...current, y: current.y + 1 };
-  if (!collides(board, next)) { current.y++; score += 1; }
-  else lockPiece();
-}
-function actRotate() {
-  const rotated = rotate(current.shape);
-  const next = { ...current, shape: rotated };
-  if (!collides(board, next)) current.shape = rotated;
-  else if (!collides(board, { ...next, x: next.x - 1 })) { current.x--; current.shape = rotated; }
-  else if (!collides(board, { ...next, x: next.x + 1 })) { current.x++; current.shape = rotated; }
-}
-function actDrop(e) {
-  if (e) e.preventDefault();
-  hardDrop();
-}
-function actPause() {
-  paused = !paused;
-}
-
 // Controls
 window.addEventListener("keydown", (e) => {
   if (!running) return;
 
   if (e.key === "p" || e.key === "P") {
-    actPause();
+    paused = !paused;
     return;
   }
   if (paused) return;
 
-  if (e.key === "ArrowLeft") actLeft();
-  else if (e.key === "ArrowRight") actRight();
-  else if (e.key === "ArrowDown") actDown();
-  else if (e.key === "ArrowUp") actRotate();
-  else if (e.key === " ") actDrop(e);
+  if (e.key === "ArrowLeft") {
+    const next = { ...current, x: current.x - 1 };
+    if (!collides(board, next)) current.x--;
+  } else if (e.key === "ArrowRight") {
+    const next = { ...current, x: current.x + 1 };
+    if (!collides(board, next)) current.x++;
+  } else if (e.key === "ArrowDown") {
+    const next = { ...current, y: current.y + 1 };
+    if (!collides(board, next)) { current.y++; score += 1; }
+    else lockPiece();
+  } else if (e.key === "ArrowUp") {
+    const rotated = rotate(current.shape);
+    const next = { ...current, shape: rotated };
+    // 簡易 wall-kick
+    if (!collides(board, next)) current.shape = rotated;
+    else if (!collides(board, { ...next, x: next.x - 1 })) { current.x--; current.shape = rotated; }
+    else if (!collides(board, { ...next, x: next.x + 1 })) { current.x++; current.shape = rotated; }
+  } else if (e.key === " ") {
+    e.preventDefault();
+    hardDrop();
+  }
 });
 
 // ---------- Leaderboard ----------

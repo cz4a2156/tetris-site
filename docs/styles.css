@@ -29,3 +29,31 @@ input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid rgba(
 .form { display: grid; gap: 8px; margin: 10px 0; }
 .actions { display: flex; gap: 8px; justify-content: flex-end; }
 .msg { margin-top: 8px; font-size: 13px; opacity: .9; }
+
+.mobile-controls{
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: none;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+.mobile-controls .btn{
+  font-size: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+@media (pointer: coarse) {
+  .mobile-controls{ display: flex; }
+  body{ padding-bottom: 90px; } /* ボタンで隠れないように */
+}
